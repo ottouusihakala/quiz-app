@@ -3,9 +3,11 @@ import type { ActionFunctionArgs, LoaderFunctionArgs, MetaFunction } from "@remi
 import {json, redirect} from '@remix-run/node'
 import { Form, useLoaderData, useSubmit } from "@remix-run/react";
 import type { QuestionWithoutAnswer } from '../services/questions';
-import questionService from '../services/questions'
+import questionService from '~/services/questions'
+import playerService from '~/services/player'
 import {useForm} from 'react-hook-form'
 import type { LinksFunction } from '@remix-run/react/dist/routeModules';
+import { commitSession, getSession } from '~/sessions';
 
 import styles from '~/styles/question.css'
 
@@ -22,8 +24,20 @@ export const meta: MetaFunction = ({matches}) => {
   ];
 };
 
+const setSessionUserIdIfNotExist = async (request: Request) => {
+  const session = await getSession(request.headers.get("Cookie"))
+  if (!session.has('userId')) {
+    const userId = 'player'
+    const {playerName} = playerService.addPlayer(userId)
+    session.set('userId', playerName)
+  }
+
+  return session
+} 
+
 export async function loader({
   params,
+  request,
 }: LoaderFunctionArgs) {
   const { questionId } = params
   if (!questionId) {
@@ -33,7 +47,15 @@ export async function loader({
   if (!question) {
     throw new Error(`No question found with questionId ${questionId}!`)
   }
-  return json(question);  
+
+  const sessionWithUserId = await setSessionUserIdIfNotExist(request)
+  const setSessionHeaderValue = await commitSession(sessionWithUserId)
+
+  return json(question, {
+    headers: {
+      'Set-Cookie': setSessionHeaderValue
+    }
+  });  
 }
 
 interface Fields {
@@ -101,14 +123,30 @@ export default function Component() {
 }
 
 export async function action({
+  params,
   request,
 }: ActionFunctionArgs) {
   const { selectedAnswer, nextQuestion }: SubmitRequest = await request.json();
+  const { questionId } = params
   console.log('selectedAnswer', selectedAnswer)
+
+  if (!questionId) {
+    throw new Error('questionId missing from params')
+  }
+
+  const session = await getSession(
+    request.headers.get("Cookie")
+  )
+  
+  if (!session.has('userId')) {
+    throw new Error('No userId found in session')
+  }
+
+  playerService.setAnswer(session.get('userId') as string, { questionId, selectedAnswer })
 
   if (nextQuestion) {
     return redirect(`/question/${nextQuestion}`)
   }
 
-  return json({ ok: true });
+  return redirect('/results')
 }

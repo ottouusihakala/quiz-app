@@ -30,9 +30,14 @@ const getQuestions = (): QuestionWithoutAnswer[] => {
 const getQuestion = (questionId: string) => {
   const question = (questions as Question[]).find((q) => q.id === questionId)
   return question ? stripAnswer(question) : undefined
-} 
+}
+
+const getQuestionsWithAnswers = (): Question[] => {
+  return questions as Question[]
+}
 
 export default {
   getQuestions,
-  getQuestion
+  getQuestionsWithAnswers,
+  getQuestion,
 }
