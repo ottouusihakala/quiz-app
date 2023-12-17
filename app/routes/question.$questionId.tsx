@@ -1,5 +1,5 @@
 import { useRef, useEffect } from 'react'
-import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
+import type { ActionFunctionArgs, LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import {json, redirect} from '@remix-run/node'
 import { Form, useLoaderData, useSubmit } from "@remix-run/react";
 import type { QuestionWithoutAnswer } from '../services/questions';
@@ -12,6 +12,15 @@ import styles from '~/styles/question.css'
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: styles },
 ];
+
+export const meta: MetaFunction = ({matches}) => {
+  const question = matches.at(1)?.data as QuestionWithoutAnswer | undefined
+  const questionTitle = question?.question
+  const titlePostfix = questionTitle ? ` - ${questionTitle}` : ''
+  return [
+    { title: `Quiz App${titlePostfix}` },
+  ];
+};
 
 export async function loader({
   params,
