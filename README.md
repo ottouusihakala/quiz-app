@@ -1,6 +1,8 @@
-# Welcome to Remix!
+# Quiz App
 
-- [Remix Docs](https://remix.run/docs)
+Motivation for this was people commenting that my powerpoint quiz would be easier if it was interactive. Most interactive quiz tools however don't support the kind of visual effects I wish to incorporate into my quizzes. Hence, I decided to make my own tool, as a web app.
+
+Uses Remix. No database, you provide a JSON file that contains the questions.
 
 ## Development
 
@@ -34,3 +36,24 @@ If you're familiar with deploying express applications you should be right at ho
 
 - `build/`
 - `public/build/`
+
+## Features
+
+### For MVP
+
+* Multiple questions
+  * Cannot move to next question without answering current question
+  * 4 options in each question
+  * Tell correct answers at the end
+
+### Additional features, possibly in the future
+
+* Different types of questions, with different types of answering mechanisms
+  * Answer combinations (connect 2 concepts)
+  * Text inputs?
+
+#### Nice-to-have
+
+* Multiple players?
+* Leaderboards?
+
