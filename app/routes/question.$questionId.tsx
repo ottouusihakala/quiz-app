@@ -63,8 +63,8 @@ interface Fields {
 }
 
 interface SubmitRequest {
-  selectedAnswer: string
-  nextQuestion: string | null
+  selectedAnswer: string | undefined | null
+  nextQuestion: string | undefined | null
 }
 
 export function usePrevious<T>(value: T) {
@@ -127,6 +127,9 @@ export async function action({
   request,
 }: ActionFunctionArgs) {
   const { selectedAnswer, nextQuestion }: SubmitRequest = await request.json();
+  if (!selectedAnswer) {
+    return json({ error: 'Missing selectedAnswer' }, { status: 400 })
+  }
   const { questionId } = params
   console.log('selectedAnswer', selectedAnswer)
 
