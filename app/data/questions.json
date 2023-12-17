@@ -1,0 +1,30 @@
+[
+  {
+    "id": "1",
+    "question": "Mitä Luciferin nimi tarkoittaa?",
+    "questionType": "MULTI_ANSWER",
+    "answers": {
+      "a": "Valontuoja",
+      "b": "Aamuntuoja",
+      "c": "Pimeydentuoja",
+      "d": "Vihollinen"
+    },
+    "correctAnswer": "a",
+    "nextQuestion": "2",
+    "backgroundImage": "Alexandre_Cabanel_-_Fallen_Angel.jpg",
+    "questionPosition": "right-strip"
+  },
+  {
+    "id": "2",
+    "question": "Mitä planeettaa Lucifer edustaa?",
+    "questionType": "MULTI_ANSWER",
+    "answers": {
+      "a": "Mars",
+      "b": "Venus",
+      "c": "Pluto",
+      "d": "Merkurius"
+    },
+    "correctAnswer": "b",
+    "questionPosition": "top"
+  }
+]

@@ -1,0 +1,27 @@
+.wrapper {
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 100vh;
+  display: flex;
+}
+
+.wrapper.question-top {
+  align-items: flex-start;
+}
+
+.wrapper.question-bottom {
+  align-items: flex-end;
+}
+
+.wrapper.question-right-strip {
+  align-items: flex-start;
+  justify-content: flex-end;
+}
+
+.wrapper.question-right-strip form {
+  margin-right: 3em;
+}
+
+.wrapper form {
+  background-color: white;
+}

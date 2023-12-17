@@ -77,7 +77,7 @@ export function usePrevious<T>(value: T) {
   return previousRef.current
 }
 
-const QuestionForm = ({ question, isPrevious = false }: { question: QuestionWithoutAnswer, isPrevious?: boolean }) => {
+const QuestionForm = ({ question }: { question: QuestionWithoutAnswer, isPrevious?: boolean }) => {
   const { id, question: questionLabel, answers, nextQuestion} = question
   const submit = useSubmit()
   const prevNextQuestion = usePrevious(nextQuestion)
@@ -97,7 +97,6 @@ const QuestionForm = ({ question, isPrevious = false }: { question: QuestionWith
     }
   }
 
-
   return (
     <Form className={`question-${id}`} onSubmit={handleSubmit(onSubmit)}>
       <fieldset key={questionLabel}>
@@ -116,9 +115,12 @@ const QuestionForm = ({ question, isPrevious = false }: { question: QuestionWith
 
 export default function Component() {
   const question = useLoaderData<typeof loader>();
+  const classNames = ['wrapper', question.questionPosition ? `question-${question.questionPosition}` : undefined].filter((className): className is string => !!className).join(' ')
 
   return (
-    <QuestionForm question={question} />
+    <div style={{ backgroundImage: `url('/image/${question.backgroundImage}')`}} className={classNames}>
+      <QuestionForm question={question} />
+    </div>
   )
 }
 
