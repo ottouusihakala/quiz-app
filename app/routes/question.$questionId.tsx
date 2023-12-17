@@ -47,7 +47,7 @@ export function usePrevious<T>(value: T) {
 }
 
 const QuestionForm = ({ question, isPrevious = false }: { question: QuestionWithoutAnswer, isPrevious?: boolean }) => {
-  const {question: questionLabel, answers, nextQuestion} = question
+  const { id, question: questionLabel, answers, nextQuestion} = question
   const submit = useSubmit()
   const prevNextQuestion = usePrevious(nextQuestion)
 
@@ -68,7 +68,7 @@ const QuestionForm = ({ question, isPrevious = false }: { question: QuestionWith
 
 
   return (
-    <Form className={isPrevious ? 'previous-question' : ''} onSubmit={handleSubmit(onSubmit)}>
+    <Form className={`question-${id}`} onSubmit={handleSubmit(onSubmit)}>
       <fieldset key={questionLabel}>
         <legend>{questionLabel}</legend>
         {Object.entries(answers).map(([key, label]) => (
@@ -85,15 +85,9 @@ const QuestionForm = ({ question, isPrevious = false }: { question: QuestionWith
 
 export default function Component() {
   const question = useLoaderData<typeof loader>();
-  const prevQuestion = usePrevious(question)
 
   return (
-    <>
-      {prevQuestion && (
-        <QuestionForm question={prevQuestion} isPrevious />
-      )}
-      <QuestionForm question={question} />
-    </>
+    <QuestionForm question={question} />
   )
 }
 
