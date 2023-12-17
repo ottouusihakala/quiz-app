@@ -41,10 +41,23 @@ If you're familiar with deploying express applications you should be right at ho
 
 ### For MVP
 
-* Multiple questions
-  * Cannot move to next question without answering current question
-  * 4 options in each question
-  * Tell correct answers at the end
+* ~Multiple questions~
+  * ~Cannot move to next question without answering current question~
+  * ~4 options in each question~
+  * ~Tell correct answers at the end~
+
+### Next features
+
+* Points on results summary
+  * Custom point counts per each question
+  * Sum of points on results page
+  * Styling for correct and incorrect questions on results page
+* Localization
+  * Initial support for english and finnish
+* Transition animation between questions
+* Possibility of going backwards in questions to amend answers (or not?)
+* Different kinds of questions
+  * First up: connect pairs of answers, ex. 3 types of Greek pillars with their respective names
 
 ### Additional features, possibly in the future
 
